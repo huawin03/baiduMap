@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>百度地图车辆调度</title>
+    <meta charset="utf-8" />
+    <script src="jquery.js"></script>
+    <script src="https://api.map.baidu.com/api?v=2.0&ak=Wvv77IvGbIdVjERtbcqjPsOGfmqZ0svb" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="container" style="width: 1000px;height: 600px; border: solid 1px #ccc;"></div>
+<div class="float_panel">
+    <div class="m_search">
+        <div class="search">
+            <input type="text" placeholder="车牌号码搜索">
+            <span>搜索</span>
+        </div>
+        <div class="add">
+            <span>+ 创建线路</span>
+        </div>
+    </div>
+    <div class="m_menu">
+        <div class="m_menu_tit">
+            <ul class="cf">
+                <li class="curr">今天</li>
+                <li>明天</li>
+                <li>全部</li>
+            </ul>
+        </div>
+        <div class="m_menu_cont">
+            <!--线路1开始-->
+            <div class="m_lines">
+                <ul class="lines_list">
+                    <li>
+                        <div class="pre_unsend">未发送</div>
+                        <div class="pre_top">
+                            <span>线路2</span>
+                            <p>
+                                <em>大兴黄村</em>
+                                <b>至</b>
+                                <em>博瑞联通</em>
+                            </p>
+                        </div>
+                        <div class="pre_info">
+                            <ul class="cf">
+                                <li>5小时20分</li>
+                                <li>82公里</li>
+                                <li>李师傅(13444455555)</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <div class="lines_detail">
+                    <ul class="lines_detail_list">
+                        <li>
+                            <div class="detail_info">
+                                <p>
+                                    <span><input type="text" value="京N34332QL" /></span>
+                                    <span>wuchengs</span>
+                                    <em>13455212234</em>
+                                    <b class="panel_edit">[修改]</b>
+                                </p>
+                                <p>
+                                    <em>11月21日</em>
+                                    <em>14:00-18:00</em>
+                                </p>
+                                <p>
+                                    <span>海淀区</span>
+                                    <span>中安村南路</span>
+                                    <span>有家小区2号</span>
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="detail_info">
+                                <p>
+                                    <span><input type="text" value="京N345672QL" /></span>
+                                    <span>wuchengs</span>
+                                    <em>13455212666</em>
+                                    <b class="panel_edit">[修改]</b>
+                                </p>
+                                <p>
+                                    <em>11月22日</em>
+                                    <em>11:00-14:00</em>
+                                </p>
+                                <p>
+                                    <span>朝阳区</span>
+                                    <span>中安村啊恶法南路中安村啊恶法南路</span>
+                                    <span>有家小区212号</span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="lines_dest">
+                        <select disabled="disabled" class="disabled">
+                            <option value="0" selected = "selected">选择接替场</option>
+                            <option value="1">选择接替场1</option>
+                            <option value="2">选择接替场2</option>
+                        </select>
+                        <b>[修改]</b>
+                    </div>
+                    <div class="lines_bring">
+                        <select>
+                            <option value="0" selected = "selected">拖车公司</option>
+                            <option value="1">拖车公司1</option>
+                            <option value="2">拖车公司2</option>
+                        </select>
+                        <select>
+                            <option value="0" selected = "selected">李师傅(13455566778)</option>
+                            <option value="1">张师傅(17855566118)</option>
+                            <option value="2">王师傅(12555566778)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--线路2结束-->
+        </div>
+    </div>
+</div>
+
+<!--线路模版-->
+<div class="line_template">
+    <div class="m_lines">
+        <ul class="lines_list">
+            <li>
+                <div class="pre_unsend">未发送</div>
+                <div class="pre_top">
+                    <span>线路1</span>
+                    <p>
+                        <em class="src_adrs"></em>
+                        <b>至</b>
+                        <em class="target_adrs"></em>
+                    </p>
+                </div>
+                <div class="pre_info">
+                    <ul class="cf">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <div class="lines_detail">
+            <ul class="lines_detail_list">
+
+            </ul>
+            <div class="lines_dest">
+                <select class="scrap_factory">
+                    <option val="0" selected = "selected">选择解体场</option>
+                    <option val="1">北京博瑞联通汽车循环利用科技有限公司</option>
+                    <option val="2">北京金属回收联营公司</option>
+                    <option val="3">北京华新凯业物资再生有限公司</option>
+                    <option val="4">北京市汽车解体厂公司</option>
+                </select>
+            </div>
+            <div class="lines_bring">
+                <select class="tail_company">
+                    <option val="0" selected = "selected">拖车公司</option>
+                    <option val="1">拖车公司1</option>
+                    <option val="2">拖车公司2</option>
+                </select>
+                <select class="tail_person">
+                    <option named="0" selected = "selected" phone="13455566778">李师傅(13455566778)</option>
+                    <option named="1" phone="17855566445">张师傅(17855566445)</option>
+                    <option named="2" phone="12555566778">王师傅(12555566778)</option>
+                </select>
+            </div>
+            <div class="lines_btn">
+                <a class="lines_send">发送</a>
+                <a class="lines_save">保存</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="station_template">
+    <li>
+        <div class="creat_line">
+            <span>第一站</span>
+            <input type="text" placeholder="请输入车牌号">
+            <a>确定</a>
+        </div>
+        <div class="detail_info" style="display: none">
+            <p>
+                <span><input type="text" value="" readonly="readonly" class="panel_carNum"/></span>
+                <span class="panel_username"></span>
+                <em class="panel_phone"></em>
+                <b class="panel_edit">[修改]</b>
+                <b class="panel_ok">[确定]</b>
+            </p>
+            <p>
+                <em class="panel_date"></em>
+                <em class="panel_time"></em>
+            </p>
+            <p>
+                <span class="panel_adrs"></span>
+                <span></span>
+                <span></span>
+            </p>
+        </div>
+    </li>
+</div>
+</body>
+<script>
+    //观察者
+    function Event(){
+        var topics = {};
+        //注册监听
+        this.listen = function(key,fn){
+            if(!topics[key]){
+                topics[key] = [];
+            }
+            topics[key].push(fn);
+        }
+        // 发射事件
+        this.emit = function(key,args){
+            var topic;
+            if(!topics[key] || topics[key].length === 0){
+                return false;
+            }
+            for(var i=0;i<topics[key].length;i++){
+                topic = topics[key];
+                topic[i].call(this,args);
+            }
+        }
+        //移除事件
+        this.remove = function(key){
+            if(!topics[key] || topics[key].length === 0){
+                return false;
+            }else{
+                for(var i=0;i<topics[key].length;i++){
+                    topics[key].shift();
+                }
+            }
+        }
+        return this;
+    }
+</script>
+<script>
+    // 百度地图API功能
+    var map = new BMap.Map("container");            // 创建Map实例
+    var pointCenter = new BMap.Point(116.431845,39.612101);
+    var point2 = new BMap.Point(116.116745,39.642201);
+    var point3 = new BMap.Point(116.377845,39.894401);
+    var obj1 = {};
+    var obj2 = {};
+    var arrPoints = [];   //每个车牌号对应的点坐标,为 {lat:xxx,lng:xxx}
+    var address1 = '北京博瑞联通汽车循环利用科技有限公司';
+    var address2 = '北京华新凯业物资再生有限公司';
+    var myGeo1 = new BMap.Geocoder();
+    var myGeo2 = new BMap.Geocoder();
+    var point4,point5;
+    var cache = [];     //已经加入拖车计划的车牌号
+    var zIndex = 1000;
+    var city = '北京市';
+    var factoryArr=[
+        {factoryName:'北京博瑞联通汽车循环利用科技有限公司',val:1},
+        {factoryName:'北京金属回收联营公司',val:2},
+        {factoryName:'北京华新凯业物资再生有限公司',val:3},
+        {factoryName:'北京市汽车解体厂公司',val:4}
+    ];
+    var factoryPoint = []
+    map.centerAndZoom(pointCenter,12);
+
+    //解体厂加入地图坐标
+    function factorypoint(){
+        for(var i=0;i<factoryArr.length;i++){
+            (function(i){
+                var myGeo = new BMap.Geocoder();
+                myGeo.getPoint(factoryArr[i].factoryName, function(point){
+                    if (point) {
+                        var thisPoint = new BMap.Point(point.lng, point.lat);
+                        var marker = new BMap.Marker(thisPoint);
+                        map.addOverlay(marker);
+                        factoryPoint[i] = {
+                            point:point,
+                            val:factoryArr[i].val
+                        }
+                    }else{
+//                alert("您选择地址没有解析到结果!");
+                    }
+                }, city);
+            })(i)
+        }
+    }
+    factorypoint();
+
+
+    /*
+     *
+     *      说明: 已经拖车的缓存队列 cache,
+     *      格式: CarEvent 维护一套已经加入拖车的数组列表,存车辆的车牌号
+     *      功能: 新增车辆时,要做去重使用,通过carEvent.emit发射事件,进行执行
+     *
+     * */
+    function CarEvent(cache){
+        var event = new Event();
+        var carCache = new CarCache(cache);
+        event.listen('add',function(data){
+            carCache.add(data);
+        });
+        event.listen('remove',function(data){
+            carCache.remove(data);
+        });
+        return event;
+    }
+    function CarCache(cache){
+        var that = this;
+        this.add = function(data){
+            if(cache.indexOf(data)>-1){  //如果已经存在,则不添加
+                return cache;
+            }
+            cache.push(data);
+            return cache;
+        }
+        this.remove = function(data){
+            var index = cache.indexOf(data);
+            if(index>-1){
+                cache.splice(index,1);
+                return cache;
+            }else{
+                return cache;
+            }
+        }
+    }
+    var carEvent = new CarEvent(cache);
+    //    carEvent.emit('add','122211');
+
+    //自定义label显示样式
+    function ComplexCustomOverlay(opt){
+        this.point = opt.point;
+        this.opt = opt;
+        this.carNum = opt.carNum;
+    }
+    ComplexCustomOverlay.prototype = new BMap.Overlay();
+    ComplexCustomOverlay.prototype.initialize = function(map){
+        this.map = map;
+        var div = this.div = document.createElement("div");
+        var initIndex = BMap.Overlay.getZIndex(this.point.lat);
+        var topIndex = 1000;
+        var that = this;
+        var innerHtml = '<p class="cf label_top"><em class="label_num">'+this.opt.carNum+'</em><em class="lable_lines">'+this.opt.lines+'</em></p><p class="label_date cf"><span>'+this.opt.date+'</span></p>';
+        div.style.zIndex = initIndex;
+        div.style.minHeight = 50 + 'px';
+        div.style.minWidth = 130 + 'px';
+        div.className = 'label_init';
+        div.innerHTML = innerHtml;
+        div.onmouseover = function(){
+            this.style.zIndex = topIndex;
+        }
+        div.onmouseout = function(){
+            this.style.zIndex = initIndex;
+        }
+//        div.onclick = function(){
+//            this.style.zIndex = initIndex;
+//            arr.push(new BMap.Point(that._point.lng, that._point.lat));
+//            var curve = new BMap.Polyline(arr, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
+//            map.addOverlay(curve);
+//        }
+        map.getPanes().labelPane.appendChild(div);
+        return div;
+    }
+    ComplexCustomOverlay.prototype.draw = function(){
+        var map = this.map;
+        var pixel = map.pointToOverlayPixel(this.point);
+        var div = this.div;
+        div.style.left = pixel.x - parseInt(div.style.minWidth)/2 + 5 + "px";
+        div.style.top  = pixel.y - parseInt(div.style.minHeight) - 10  + "px";
+    }
+
+    //  地址坐标转换为点坐标
+    var Point = function(opt){
+        this.opt = opt;
+    }
+    Point.prototype.getPoint = function(){
+        var myGeo = new BMap.Geocoder();
+        var opt = this.opt;
+        var _label;
+        myGeo.getPoint(opt.moveAdrs, function(point){
+            if (point) {
+                opt.point = point;
+                _label = new ComplexCustomOverlay(opt);
+                //将有效的车辆信息添加的全局 arrPoints 中
+                arrPoints.push(_label);
+                map.addOverlay(_label);
+            }else{
+//                alert("您选择地址没有解析到结果!");
+            }
+        }, opt.city);
+    }
+    var initPoint = function(data){
+        if(!data || !data.data || data.data.length === 0){
+            alert('获取数据失败');
+            return;
+        }
+        var data = data.data;
+        var _preData = null;
+        var _opt = null;
+        var point;
+        var city= '京';
+        for(var i=0;i<data.length;i++){
+            _preData = data[i];
+            _opt = {
+                moveAdrs:_preData.carPosition,
+                carNum:_preData.carNum,
+                lines:'线路1',
+                date:_preData.tgTime,
+                city:'北京市',
+                username:_preData.name || '',
+                phone:_preData.mobile,
+                adrs:city + _preData.carPosition
+            }
+            point = new Point(_opt);
+            point.getPoint();
+        }
+    }
+    // var curve = new BMap.Polyline([point1,point2,point3], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+    // map.addOverlay(curve); //添加到地图中
+    //北京博瑞联通汽车循环利用科技有限公司
+    //北京金属回收联营公司
+    //北京华新凯业物资再生有限公司
+    //北京市汽车解体厂公司
+
+    //新增线路
+    var NewLines = function(){
+        var step=1,that = this;
+        var stepEvent = new Event();
+        var reg = /[\u4e00-\u9fa5]/g;  //汉字范围(车牌号带文字),暂时预留
+        var lineBox;
+        var lineEvent = new Event();
+        var curve;
+        this.points = [];
+        lineEvent.listen('add',function(point){
+            that.points.push(point);
+        });
+        lineEvent.listen('replace',function(point){
+            //主意,这里index的起始值为 1 !!
+            that.points.splice((point.index-1),1,point.val);
+        });
+        function addPolyline(pointArr){
+            if(curve){
+                map.removeOverlay(curve);
+            }
+            var arr = [],color;
+            color = 'rgb(' + rd(0,255) + ',' + rd(0,255) + ',' + rd(0,255) + ')';
+            for(var i=0;i<pointArr.length;i++){
+                arr[i] = new BMap.Point(pointArr[i].lng, pointArr[i].lat);
+                curve = new BMap.Polyline(arr, {strokeColor:color, strokeWeight:3, strokeOpacity:.8});
+                map.addOverlay(curve);
+            }
+        }
+        function rd(n,m){
+            var c = m-n+1;
+            return Math.floor(Math.random() * c + n);
+        }
+        //增加路线的每一站
+        function Station(temp,box){
+            var that = this;
+            this.isEdit = false;
+            this.editVal = undefined;
+            this.box = box;
+            this.index = step;
+            this.init = function(){
+                this.addTemp(temp,box);
+            }
+            this.addTemp = function(temp,box){
+                $(temp).find('.creat_line span').text('第'+ this.index +'站')
+                $(temp).find('.creat_line a').on('click',function(){
+                    var $this = $(this);
+                    that.addStation($this);
+                });
+                $(temp).find('.panel_edit').on('click',function(){
+                    var $this = $(this);
+                    that.editStation($this);
+                })
+                return $(box).append(temp);
+            }
+            return this.init();
+        };
+
+
+        Station.prototype.addStation = function($this){
+            var val = $.trim($this.siblings('input').val()),that = this;
+            var label,temp,adrs,oldLabel = null;
+            if(this.isEdit){   //为编辑状态,原有数据等于编辑后的数据,直接隐藏
+                if(this.editVal == val){
+                    $this.closest('.creat_line').hide();
+                    this.editVal = undefined;
+                    this.isEdit = false;
+                    return;
+                }
+            }
+            label = canAdd(val);
+            /*
+             *
+             *编辑成功后,原有数据 !== 编辑后的数据,将cache里面原有数据清空,
+             * 如果为编辑状态,则改变右侧地图的文字标识,去除原有的,且不增加新线路
+             * 如果为新增则点击确定后,继续追加,新增新线路
+             *同时初始化编辑状态
+             *
+             * */
+            if(label){     //车牌号已经改变
+                carEvent.emit('remove',this.editVal);
+                $this.closest('.creat_line').hide();
+                $this.closest('.creat_line').siblings('.detail_info').show();
+                temp = $this.closest('.creat_line').siblings('.detail_info');
+                carEvent.emit('add',val);
+                if(this.isEdit){   //为编辑
+                    oldLabel = getLabel(this.editVal);
+                    removeCurr(oldLabel);
+                    lineEvent.emit('replace',{
+                        index:that.index,
+                        val:label,
+                        Carnum:label.opt.carNum,
+                        carPosition:label.opt.moveAdrs,
+                        Telephone:label.opt.phone,
+                        tailTime:label.opt.date,
+                        point:label.point
+                    });
+                }else{     // 为新增
+                    step += 1;
+                    stepEvent.emit('addNewStep');       //通知增加下一站
+                    lineEvent.emit('add',{
+                        index:that.index,
+                        val:label,
+                        Carnum:label.opt.carNum,
+                        carPosition:label.opt.moveAdrs,
+                        Telephone:label.opt.phone,
+                        tailTime:label.opt.date,
+                        point:label.point
+                    });
+                }
+                addCurr(label);
+                if(this.index === 1){
+                    adrs = label.opt.moveAdrs;
+                    freshSrcAdrs(adrs,$(lineBox));
+                }
+                bindData(temp, label.opt);
+                this.editVal = undefined;
+                this.isEdit = false;
+            }
+        }
+
+        Station.prototype.editStation = function($this){
+            this.isEdit = true;
+            $this.closest('.lines_detail_list li').find('.creat_line').show();
+            $this.closest('.lines_detail_list li').find('.creat_line').find('input').focus();
+            this.editVal = $.trim($this.closest('.detail_info').find('.panel_carNum').val());
+            this.editVal = this.editVal.toLowerCase();
+        }
+
+        function bindData(template,data){
+            template.find('.panel_carNum').val(data.carNum);
+            template.find('.panel_username').text(data.username);
+            template.find('.panel_phone').text(data.phone);
+            template.find('.panel_date').text(data.date);
+            template.find('.panel_adrs').text(data.adrs);
+        }
+        //更新起始地址
+        function freshSrcAdrs(adrs,box){
+            if(adrs){
+                box.find('.pre_top .src_adrs').text(adrs);
+            }
+        }
+        //切换地图文本状态为选中
+        function addCurr(pointObj){
+            $(pointObj.div).addClass('curr');
+        }
+        //移除地图文本状态,为不选中
+        function removeCurr(pointObj){
+            $(pointObj.div).removeClass('curr');
+        }
+        //车牌号有效性验证
+        function canAdd(val){
+            var obj = null,carNum,arr=[];
+            val = val.toLowerCase();
+            if(!val){
+                alert('请输入车牌号');
+                return false;
+            }else if(cache.indexOf(val)>-1){       //缓存车辆里面去重
+                alert('该车牌号已经安排拖车');
+                return false;
+            }else{
+                //总列表里面遍历检查合法性
+                for(var i=0;i<arrPoints.length;i++){
+                    carNum = arrPoints[i].carNum.toLowerCase();
+                    if(val == carNum){
+                        obj = arrPoints[i];
+                    }
+                    arr.push(carNum);
+                }
+                if(arr.indexOf(val)<0){
+                    alert('找不到对应的车牌号');
+                    return false;
+                }
+            }
+            //add
+            carEvent.emit('add',val);
+            //验证可以添加,将可以添加的信息返回出去
+            return obj;
+        }
+        //克隆dom节点
+        this.clone = function(src){
+            return src.clone();
+        }
+        //线路渲染,渲染新增线路
+        this.render = function(){
+            lineBox = this.clone($('.line_template').children());
+            lineBox.find('.scrap_factory').on('change',function(){
+                var val = +($(this).find('option:selected').attr('val'));
+                var text = $(this).find('option:selected').text();
+                if(val>0){
+                    lineBox.find('.target_adrs').text(text);
+                }else{
+                    lineBox.find('.target_adrs').text('');
+                }
+            });
+            $('.m_menu_cont').prepend(lineBox);
+        }
+        //增加下一站
+        this.addStep = function(){
+            var temp,box,station;
+            temp = this.clone($('.station_template').children());
+            box = lineBox.find('.lines_detail_list');
+            station = new Station(temp,box);
+        }
+        this.getData = function(){
+            var data = {};
+            var route = this.points;
+            var $lineBox = $(lineBox);
+            var tailPerson,tailMobile,scrapFactory,state;
+            tailPerson = $lineBox.find('.tail_person option:selected').attr('named');
+            tailMobile = $lineBox.find('.tail_person option:selected').attr('phone');
+            scrapFactory = +($lineBox.find('.scrap_factory option:selected').attr('val'));
+            state = 0;
+            if(!route || route.length === 0){
+                alert('请选择路线规划');
+                return false;
+            }
+            if(scrapFactory<1){
+                alert('请选择解体厂');
+                return false;
+            }
+            data = {
+                route:route,
+                tailPerson:tailPerson,
+                tailMobile:tailMobile,
+                scrapFactory:scrapFactory,
+                state:state
+            }
+            return data;
+        }
+        this.send = function(){
+            $(lineBox).find('.lines_send').click(function(){
+                var data = that.getData();
+                var pointArr = [];
+                if(!data){
+                    return false;
+                }
+                for(var i=0;i<that.points.length;i++){
+                    pointArr.push(that.points[i].point)
+                }
+                for(var j=0;j<factoryPoint.length;j++){
+                    if(data.scrapFactory === factoryPoint[j].val){
+                        pointArr.push(factoryPoint[j].point);
+                    }
+                }
+                addPolyline(pointArr);
+                $.ajax({
+                    type:'get',
+                    url:'http://test.erp.carcycle.cn/mall/bfRoute/addRouteAndRelation',
+                    success:function(data){
+
+                    },
+                    error:function(err){
+                        alert(err);
+                    }
+                });
+            });
+        }
+        function getLabel(val){
+            var obj = null,carNum;
+            if(!val){
+                return;
+            }
+            for(var i=0;i<arrPoints.length;i++){
+                carNum = arrPoints[i].carNum.toLowerCase();
+                if(val == carNum){
+                    obj = arrPoints[i];
+                }
+            }
+            return obj;
+        }
+        this.init = function(){
+            this.render();
+            this.addStep();
+            this.send();
+        }
+        // 添加新一站
+        stepEvent.listen('addNewStep',function(){
+            that.addStep();
+        });
+        return this.init();
+    }
+
+    $('.m_search .add').click(function(){
+        new NewLines();
+    });
+
+
+</script>
+</html>
+
